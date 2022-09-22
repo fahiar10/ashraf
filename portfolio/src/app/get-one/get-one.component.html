@@ -1,0 +1,21 @@
+<div class="search container my-3">
+
+  <span class="p-input">
+    <input type="text" pInputText [(ngModel)]="usn" placeholder="Search" />
+  </span>
+  <p-button class="px-3"
+    label="Search"
+    icon="pi pi-search"
+    [loading]="isLoading"
+    (click)="Submit()"
+  ></p-button>
+</div>
+  <div class="searchItem">
+      <li>
+          <h3>Name:</h3>
+          <h5>USN:</h5>
+          <h6>Age</h6>
+        </li>
+  </div>
+
+

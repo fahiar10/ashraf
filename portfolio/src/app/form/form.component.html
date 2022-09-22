@@ -1,0 +1,56 @@
+
+<div *ngIf="!ed">
+
+  
+  <div class="container" style="margin:50px;">
+    <form #login="ngForm" (ngSubmit)="submit(login)">
+      <div class="form-group mb-3">
+        <label for="name" >Name</label>
+        <input type="text"  style="width: 50%;" class="form-control" [(ngModel)]="name" name="name" required>
+      </div>
+        <div class="form-group mb-3">
+          <label for="usn" >USN</label>
+          <input type="text" style="width: 50%" class="form-control" [(ngModel)]="usn" name="usn" required >
+        </div>
+        <div class="form-group mb-3">
+          <label for="name" >Age</label>
+          <input  type="text" style="width: 50%" class="form-control" [(ngModel)]="age" name="age" required >
+        </div>
+        <div>
+        <p-calendar [(ngModel)]="value" placeholder="__/__/__"></p-calendar>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    
+    
+      <ul class="container my-3" *ngIf="load">
+        
+        <li *ngFor="let d of data"> 
+         
+          <h1>Name :{{ d.name }}</h1>
+          <h1>Usn :{{ d.usn }}</h1>
+          <h1>Age :{{ d.age }}</h1>
+          {{d._id}}
+          <button (click)="Edit(d)" routerLink="edit" routerLinkActive="active">Edit</button> <button (click)="Delete(d._id)">Delete</button>
+          <hr>
+       
+        </li>
+      
+      </ul>
+      <ul *ngIf="!load">
+        <li *ngFor="let person of data" class="container" > 
+          <p-skeleton width="50%" height="10rem" *ngIf="!load"> 
+    
+          </p-skeleton>
+          </li>
+      </ul>
+     
+   
+    
+  </div>
+ 
+  
+
+<!-- editing modal will be here -->
+

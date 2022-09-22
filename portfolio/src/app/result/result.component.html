@@ -1,0 +1,22 @@
+<div class="container">
+  <form action="" method="post" #data = "ngForm"  (ngSubmit)="AddSem(data)">
+    <div>
+      <p-dropdown
+        [options]="sem"
+        [(ngModel)]="selectedSem"
+        optionLabel="name"
+        optionValue="code"
+        name="sem"
+      ></p-dropdown>
+    </div>
+    <button pButton type="submit" label="Add" pRipple> </button>
+  </form>
+</div>
+<p-toast></p-toast>
+
+
+<div class="container" *ngIf="uploadFile">
+    <input type="file"  class="container" (change) = "UploadFile($event)">
+
+    
+</div>

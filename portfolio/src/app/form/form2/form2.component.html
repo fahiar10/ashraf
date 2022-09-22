@@ -1,0 +1,19 @@
+<h1>Edited</h1>
+<div class="container" style="margin:50px;">
+    <form #login="ngForm" (ngSubmit)="SubmitEdited(login,person._id)">
+        <div class="form-group mb-3">
+          <label for="name" >Name</label>
+          <input type="text"  style="width: 50%;" class="form-control"  name="name" required  [value]="person.name" [(ngModel)]="person.name" >
+        </div>
+        <div class="form-group mb-3">
+          <label for="usn" >USN</label>
+          <input type="text" style="width: 50%" class="form-control"  name="usn" required [value]="person.usn" [(ngModel)]="person.usn">
+        </div>
+        <div class="form-group mb-3">
+          <label for="name" >Age</label>
+          <input  type="text" style="width: 50%" class="form-control"  name="age" required [value]="person.age" [(ngModel)]="person.age">
+        </div>
+        <button type="submit" pButton class="btn btn-primary">Edit</button> <button routerLink="/home"  class="btn btn-primary">Back</button>
+      </form>
+</div>
+<p-toast position="top-left" ></p-toast>
