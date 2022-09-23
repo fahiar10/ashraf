@@ -237,5 +237,14 @@ router.delete('/deleteSub',async(req,res)=>{
         res.status(500).json({message: e.message})
     }
 })
+router.delete('/deleteMark',async(req,res)=>{
+    try{
+        MarksModel.collection.deleteMany({})
+        res.status(200).send("Done");
+    }catch(e){
+        res.status(500).json({message: e.message})
+    }
+})
+
 
 module.exports = router; 
