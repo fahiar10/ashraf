@@ -16,11 +16,11 @@ const studentschema = new mongoose.Schema({
         type:String
     },
     totalmarks:{
-        required:false,
+        required:true,
         type:Number
     },
     percentage:{
-        required:false,
+        required:true,
         type:Number
     }
 })
