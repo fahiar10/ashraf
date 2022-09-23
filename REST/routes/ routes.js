@@ -7,6 +7,7 @@ const StudentModel = require('../model/studentModel')
 const MarksModel = require('../model/marksModel');
 const semModel = require('../model/semModel');
 const studentModel = require('../model/studentModel');
+const marksModel = require('../model/marksModel');
 
 
 const router = express.Router()
@@ -178,7 +179,7 @@ router.get('/getSem', async (req, res) => {
 //get students over all toppers with sorted order
 router.get('/getStudentTopper', async (req, res) => {
     try{
-        const data = await studentModel.find({},{_id:0,__v:0}).sort({totalmarks:-1});
+        const data = await studentModel.find({percentage:{$gte:77.5}},{_id:0,__v:0}).sort({totalmarks:-1});
         res.status(200)
         res.json(data)
     }
@@ -188,18 +189,17 @@ router.get('/getStudentTopper', async (req, res) => {
 })
 
 //get subject wise topper with sorted order
+
 router.get('/getSubjectTopper', async (req, res) => {
     try{
-        var subID =   SubModel.find({},{_id:1});
-        // const Data = new Array();
-        //  (await SubModel.find({},{_id:1})).forEach(element => {
-        //     const d =  MarksModel.find({subId:element._id});
-        //     console.log(d.totalmarks);         
-        // });
-        console.log(subID[0]._id);
+        let _subID =  await SubModel.find({},{_id:1});
+        let Data = new Array();
+        for(let i=0; i<_subID.length; i++){
+            let markpersubObj = await MarksModel.find({ subId: _subID[i]._id }).sort({ totalMarksPerSubject: -1 });
+            Data.push(markpersubObj[0]);
+        }
         res.status(200)
-        res.send(typeof(Data))
-        // res.json(subID)
+        res.json(Data);
     }
     catch(error){
         res.status(500).json({message: error.message})
@@ -237,5 +237,14 @@ router.delete('/deleteSub',async(req,res)=>{
         res.status(500).json({message: e.message})
     }
 })
+router.delete('/deleteMark',async(req,res)=>{
+    try{
+        MarksModel.collection.deleteMany({})
+        res.status(200).send("Done");
+    }catch(e){
+        res.status(500).json({message: e.message})
+    }
+})
+
 
 module.exports = router; 
