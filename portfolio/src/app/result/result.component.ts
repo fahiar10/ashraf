@@ -71,7 +71,7 @@ export class ResultComponent implements OnInit {
 
       console.log(this.uploadedData);
       console.log(this.subjectData);
-       this.AddSub(this.SemObjId, this.subjectData); // to add the subject details of applied sem (subject and cubject code
+       this.AddSub(this.SemObjId, this.subjectData); // to add the subject details of applied sem (subject and subject code)
        this.AddStudent(this.SemObjId, this.uploadedData); //to add details of students like marks,usn,name,percentage etc
       // this.AddSub(this.SemObjId, this.subjectData); // to add the subject details of applied sem (subject and cubject code
     };
@@ -123,11 +123,14 @@ export class ResultComponent implements OnInit {
        for (let i = 0; i < subdetails.length; i++) {
         if (subid == subdetails[i]._id) {
           key =subdetails[i].subject;
-          console.log(subid + ' ' + key + ' ' + uploadedData[idx][key]+ ' '+idx);
+          // console.log(semId+" "+StdId+" "+subid+" "+uploadedData[j][key]+" "+key +" "+ idx);
+          console.log(StdId +" " + subid + ' ' + key + ' ' + uploadedData[idx][String(key)+"_IA"]+" " +uploadedData[idx][String(key)+"_EA"]+" "+ uploadedData[idx][key]+ ' '+idx);
             let marksobj = {
             "semId":semId,
             "subId":subid,
             "studentId":StdId,
+            "ia":uploadedData[idx][String(key)+"_IA"],
+            "ea":uploadedData[idx][String(key)+"_EA"],
             "totalMarksPerSubject":uploadedData[idx][key]
            }
           const arg = await lastValueFrom(this.ResultsService.postMarks(marksobj));
