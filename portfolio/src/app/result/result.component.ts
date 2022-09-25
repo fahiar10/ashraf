@@ -46,17 +46,21 @@ export class ResultComponent implements OnInit {
   }
   selectedSem: number = 0;
 
+  submitload = false; //this flag is used when file is uploading....
   // upload the excel file
   uploadedData: any; //uploadedData contains worksheet1
   subjectData: any; //subjectData conatains worksheet2
-  async UploadFile(event: any) {
+  viewresult = false;
+  UploadFile(event: any) {
     // when file uploaded this function is called
+    // console.log(event.files[0]);
+    this.submitload = true;
 
-    let file = event.target.files[0];
+    let file = event.files[0];
     let fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
 
-    fileReader.onload = async (e) => {
+    fileReader.onload = (e) => {
       var workbook = XLSX.read(fileReader.result, {
         type: 'binary',
         sheetRows: 0,
@@ -71,14 +75,17 @@ export class ResultComponent implements OnInit {
 
       console.log(this.uploadedData);
       console.log(this.subjectData);
-       this.AddSub(this.SemObjId, this.subjectData); // to add the subject details of applied sem (subject and subject code)
-       this.AddStudent(this.SemObjId, this.uploadedData); //to add details of students like marks,usn,name,percentage etc
+      this.AddSub(this.SemObjId, this.subjectData); // to add the subject details of applied sem (subject and subject code)
+      this.AddStudent(this.SemObjId, this.uploadedData); //to add details of students like marks,usn,name,percentage etc
+      // this.submitload = !this.submitload;
+      if (!this.submitload) {
+        this.viewresult = true;
+      }
     };
   }
-
   Subjects: Array<sub_interface> = []; // Array conataining the subject details (subject:subject code)
 
-   async AddSub(SemObjId: any, subjectData: any) {
+  AddSub(SemObjId: any, subjectData: any) {
     for (var subname in subjectData[0]) {
       let subobj = {
         semId: SemObjId,
@@ -91,7 +98,8 @@ export class ResultComponent implements OnInit {
       });
     }
   }
-  async AddStudent(semId: any, uploadedData: any) {
+
+  AddStudent(semId: any, uploadedData: any) {
     uploadedData.forEach(async (_data: any, j: any) => {
       let percent = Number(uploadedData[j]['Percentage']);
       // console.log(percent);
@@ -103,7 +111,7 @@ export class ResultComponent implements OnInit {
         percentage: percent,
       };
       const arg = await lastValueFrom(this.ResultsService.postStudent(stdobj));
-       await this.AddMarks(
+      this.AddMarks(
         this.SemObjId,
         arg._id,
         this.Subjects,
@@ -113,44 +121,67 @@ export class ResultComponent implements OnInit {
     });
   }
 
-  async AddMarks(semId: any, StdId: any, Subjects: any[], uploadedData: any,idx:any) {
-    console.log('Hello'+idx);
+  async AddMarks(
+    semId: any,
+    StdId: any,
+    Subjects: any[],
+    uploadedData: any,
+    idx: any
+  ) {
+    console.log('Hello' + idx);
     const subdetails = await lastValueFrom(this.ResultsService.getSub());
-    Subjects.forEach(async(subid, j) => {
+    Subjects.forEach(async (subid, j) => {
       let key: any;
-       for (let i = 0; i < subdetails.length; i++) {
+      for (let i = 0; i < subdetails.length; i++) {
         if (subid == subdetails[i]._id) {
-          key =subdetails[i].subject;
+          if (!this.submitload) this.submitload = true;
+          key = subdetails[i].subject;
           // console.log(semId+" "+StdId+" "+subid+" "+uploadedData[j][key]+" "+key +" "+ idx);
-          console.log(StdId +" " + subid + ' ' + key + ' ' + uploadedData[idx][String(key)+"_IA"]+" " +uploadedData[idx][String(key)+"_EA"]+" "+ uploadedData[idx][key]+ ' '+idx);
-            let marksobj = {
-            "semId":semId,
-            "subId":subid,
-            "studentId":StdId,
-            "ia":uploadedData[idx][String(key)+"_IA"],
-            "ea":uploadedData[idx][String(key)+"_EA"],
-            "totalMarksPerSubject":uploadedData[idx][key]
-           }
-          const arg = await lastValueFrom(this.ResultsService.postMarks(marksobj));
-
+          console.log(
+            StdId +
+              ' ' +
+              subid +
+              ' ' +
+              key +
+              ' ' +
+              uploadedData[idx][String(key) + '_IA'] +
+              ' ' +
+              uploadedData[idx][String(key) + '_EA'] +
+              ' ' +
+              uploadedData[idx][key] +
+              ' ' +
+              idx
+          );
+          let marksobj = {
+            semId: semId,
+            subId: subid,
+            studentId: StdId,
+            ia: uploadedData[idx][String(key) + '_IA'],
+            ea: uploadedData[idx][String(key) + '_EA'],
+            totalMarksPerSubject: uploadedData[idx][key],
+          };
+          const arg = await lastValueFrom(
+            this.ResultsService.postMarks(marksobj)
+          );
           break;
-          
         }
       }
     });
     console.log('...............');
+    this.subjectData = false;
   }
-
   //Add sem
   uploadFile = false; //this is flag to show the upload button
 
   SemObjId: any;
+  spinnerload = false;
   AddSem(data: any) {
     //when Add button is clicked this function is called
+    this.spinnerload = !this.spinnerload;
+
     console.log(data.form.value); //ex:{  sem : 2 }
     let semObj = data.form.value;
     let isSemavailable = true;
-
 
     this.ResultsService.getSem().subscribe({
       next: (data) => {
@@ -174,6 +205,7 @@ export class ResultComponent implements OnInit {
           });
           this.uploadFile = true;
         }
+        this.spinnerload = !this.spinnerload;
       },
       error: (e) => console.error(e),
     });
