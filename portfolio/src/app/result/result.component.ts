@@ -73,7 +73,6 @@ export class ResultComponent implements OnInit {
       console.log(this.subjectData);
        this.AddSub(this.SemObjId, this.subjectData); // to add the subject details of applied sem (subject and cubject code
        this.AddStudent(this.SemObjId, this.uploadedData); //to add details of students like marks,usn,name,percentage etc
-      // this.AddSub(this.SemObjId, this.subjectData); // to add the subject details of applied sem (subject and cubject code
     };
   }
 
@@ -91,7 +90,6 @@ export class ResultComponent implements OnInit {
         this.Subjects.push(arg._id);
       });
     }
-    //  this.AddStudent(this.SemObjId,this.uploadedData); //to add details of students like marks,usn,name,percentage etc
   }
   async AddStudent(semId: any, uploadedData: any) {
     uploadedData.forEach(async (_data: any, j: any) => {
@@ -136,24 +134,6 @@ export class ResultComponent implements OnInit {
           
         }
       }
-
-      // let d = subdetails.forEach((indx) => {
-      //   if (subid == indx._id) {
-      //      key =indx.subject;
-      //      console.log(subid + ' ' + key + ' ' + uploadedData[i%subdetails.length][key]+ ' '+i);
-      //      i+=1;
-      //      return;
-      //     //  let stdobj = {
-      //     //   "semId":semId,
-      //     //   "subId":subid[j],
-      //     //   "studentId":StdId,
-      //     //   "totalMarksPerSubject":uploadedData[j][key]
-      //     //  }
-      //     //   const arg = await lastValueFrom(this.ResultsService.postStudent(stdobj));
-      //   }
-      //   return;
-      // });
-      // console.log(subid + ' ' + key + ' ' + uploadedData[j][key]);
     });
     console.log('...............');
   }
@@ -167,6 +147,7 @@ export class ResultComponent implements OnInit {
     console.log(data.form.value); //ex:{  sem : 2 }
     let semObj = data.form.value;
     let isSemavailable = true;
+
 
     this.ResultsService.getSem().subscribe({
       next: (data) => {

@@ -39,8 +39,11 @@ import {DropdownModule} from 'primeng/dropdown';
 import {RippleModule} from 'primeng/ripple';
 
 import {FileUploadModule} from 'primeng/fileupload';
+import { ViewResultComponent } from './view-result/view-result.component';
 
 
+
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import {FileUploadModule} from 'primeng/fileupload';
     Form2Component,
     GetOneComponent,
     ResultComponent,
+    ViewResultComponent,
 
   ],
   imports: [
@@ -70,7 +74,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     ButtonModule,
     DropdownModule,
     RippleModule,
-    FileUploadModule
+    FileUploadModule,
+    MatProgressSpinnerModule
 
   ],
   providers: [MessageService],

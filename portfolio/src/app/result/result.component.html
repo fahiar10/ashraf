@@ -10,13 +10,14 @@
       ></p-dropdown>
     </div>
     <button pButton type="submit" label="Add" pRipple> </button>
+  <button pButton type="button" label="+" pRipple routerLink="/viewResult" routerLinkActive="active"></button>
+  <div class="container" id=""spinner>
+    <mat-spinner></mat-spinner>
+  </div>
   </form>
 </div>
 <p-toast></p-toast>
 
-
 <div class="container" *ngIf="uploadFile">
-    <input type="file"  class="container" (change) = "UploadFile($event)">
-
-    
+    <input type="file"  class="container" (change) = "UploadFile($event)">    
 </div>
