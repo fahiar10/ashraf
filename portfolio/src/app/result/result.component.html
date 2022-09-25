@@ -1,4 +1,8 @@
 <body>
+  <!-- *ngIf="submitload" -->
+  <div *ngIf="submitload" >
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
   <!-- Modal -->
   <div
     class="modal fade"
@@ -62,8 +66,8 @@
         aria-label="Example home icon"
         fontIcon="home"
         title="Click to know more"
-      ></mat-icon
-    ></a>
+      ></mat-icon>
+    </a>
   </div>
 
   <div class="tabClass">
@@ -102,75 +106,18 @@
     </form>
     <p-toast></p-toast>
 
-    <div class="tabClass">
-      <mat-spinner color="warn"></mat-spinner>
-    </div>
-    <!-- 
-  <div class="tabClass2">
-    <div class="sheet1">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title style="font-weight: bold">SHEET 1</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="../../assets/images/sheet1.png" alt="sheet1" />
-        <mat-card-content>
-          <span class="badge bg-info">Info</span>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-            reiciendis velit eos odio odit, totam eum deleniti nesciunt commodi
-            a repellat ut unde tenetur eaque dolorum adipisci doloribus harum
-            culpa!
-          </p>
-        </mat-card-content>
-      </mat-card>
+    <div class="tabClass" *ngIf="spinnerload">
+      <!-- <mat-spinner color="warn"></mat-spinner> -->
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
 
-    <div class="sheet2">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title style="font-weight: bold">SHEET 2</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="../../assets/images/sheet2.png" alt="sheet2" />
-        <mat-card-content>
-          <span class="badge bg-success">Info</span>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-            soluta quasi odio possimus necessitatibus porro quos libero
-            voluptatem, sit repellat fuga, aut et molestias. Explicabo, eos.
-            Modi perferendis reprehenderit illum!
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div> -->
-
-    <div class="tabClass2" *ngIf="uploadFile">
-      <input
-        type="file"
-        class="form-control col-lg-2 col-md-2 col-sm-2"
-        id="input-file-id"
-        (change)="UploadFile($event)"
-      />
+    <!-- *ngIf="uploadFile" -->
+    <div style="margin-top: 6em;" *ngIf="uploadFile">
+      <p-fileUpload style="height:30vh" name="myfile[]" [customUpload]="true" (uploadHandler)="UploadFile($event)"></p-fileUpload>
     </div>
   </div>
-
-  <!-- bootstrap css-->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-    crossorigin="anonymous"
-  />
-
-  <!-- bootstrap js -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-    crossorigin="anonymous"
-  ></script>
 </body>
+
+<div #view *ngIf="viewresult">
+  <app-view-result></app-view-result>
+</div>

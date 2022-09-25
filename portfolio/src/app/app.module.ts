@@ -39,6 +39,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {RippleModule} from 'primeng/ripple';
 
 import {FileUploadModule} from 'primeng/fileupload';
+import { ViewResultComponent } from './view-result/view-result.component';
 
 // i addded from here 
 import {MatCardModule} from '@angular/material/card'; 
@@ -51,6 +52,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
+
 @NgModule({
   declarations: [
     AppComponent, 
@@ -61,6 +63,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     Form2Component,
     GetOneComponent,
     ResultComponent,
+    ViewResultComponent,
 
 
   ],
@@ -81,14 +84,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     DropdownModule,
     RippleModule,
     FileUploadModule,
+    MatProgressSpinnerModule,
     MatCardModule,
     MatBadgeModule,
     MatIconModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatFormFieldModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatFormFieldModule,
+    MatToolbarModule,
+    MatSelectModule
 
   ],
   providers: [MessageService],
