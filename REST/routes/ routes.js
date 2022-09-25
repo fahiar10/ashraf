@@ -226,9 +226,24 @@ router.get('/Failedetails', async (req, res) => {
     }
 })
 
-
-
-
+/************************GET SUBJECTWISE FAILURES (Passing Mark:21)****************/
+router.get('/subjectwisefailure', async (req, res) => {
+    try{
+        let _subID =  await SubModel.find({},{_id:1});
+        let Data = new Array();
+        // let total_failure = 0;
+        for(let i=0; i<_subID.length; i++){
+            let failuredetailsObj = await MarksModel.find({subId: _subID[i]._id, ea : {$lt :21}});
+            // total_failure+=failuredetailsObj.length
+            Data.push(failuredetailsObj);
+        }
+        res.status(200)
+        res.json(Data);
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
 
 /************************DELETE RECORDS************************************** */
 router.delete('/deleteStd',async(req,res)=>{
