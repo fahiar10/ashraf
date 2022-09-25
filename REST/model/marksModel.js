@@ -18,11 +18,11 @@ const marksschema = new mongoose.Schema({
         type:ObjectId
     },
     ia:{
-        required:false,
+        required:true,
         type:Number
     },
     ea:{
-        required:false,
+        required:true,
         type:Number
     },
     totalMarksPerSubject:{
