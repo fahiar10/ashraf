@@ -215,6 +215,16 @@ router.get('/Subjectdetails', async (req, res) => {
         res.status(500).json({message: error.message})
     }
 })
+router.get('/Failedetails', async (req, res) => {
+    try{
+        const data = await SubModel.find({},{_id:1,subject:1});
+        res.status(200)
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
 
 
 
