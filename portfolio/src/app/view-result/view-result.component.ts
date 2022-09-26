@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { ResultsService } from '../results.service';
+
 
 @Component({
   selector: 'app-view-result',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewResultComponent implements OnInit {
 
-  constructor() { }
+  constructor(private ResultsService:ResultsService) { }
 
-  ngOnInit(): void {
+  TopperObj:any;
+  SubjectTopperObj:any;
+  SubjectFailObj:any;
+  async ngOnInit(){
+    this.TopperObj = await lastValueFrom(this.ResultsService.getTopper());
+    this.SubjectTopperObj = await lastValueFrom(this.ResultsService.getSubTopper());
+    this.SubjectFailObj = await lastValueFrom(this.ResultsService.getSubFail());
+
   }
 
 }
