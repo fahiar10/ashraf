@@ -5,13 +5,25 @@ ObjectId = Schema.ObjectId;
 
 
 const marksschema = new mongoose.Schema({
+    sem:{
+        required:true,
+        type:Number
+    },
     semId:{
         required:true,
         type:ObjectId
     },
+    sub:{
+        required:true,
+        type:String
+    },
     subId:{
         required:true,
         type:ObjectId
+    },
+    student:{
+        required:true,
+        type:String
     },
     studentId:{
         required:true,

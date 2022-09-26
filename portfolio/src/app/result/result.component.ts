@@ -130,7 +130,7 @@ export class ResultComponent implements OnInit {
         };
         const arg = await lastValueFrom(this.ResultsService.postStudent(stdobj));        
 
-        this.AddMarks(this.SemObjId,arg._id,this.Subjects,this.uploadedData,j);
+        this.AddMarks(this.selectedSem, this.SemObjId, stdobj.name, arg._id, this.Subjects,this.uploadedData,j);
       }
       res(true);
 
@@ -160,7 +160,7 @@ export class ResultComponent implements OnInit {
     })    
   }
 
-  async AddMarks(semId: any,StdId: any,Subjects: any[],uploadedData: any,idx: any) {
+  async AddMarks(semester:Number, semId: any, stud:String, StdId: any, Subjects: any[],uploadedData: any, idx: any) {
     return new Promise(async(res)=>{
       console.log('Hello' + idx);
       const subdetails = await lastValueFrom(this.ResultsService.getSub());
@@ -173,8 +173,11 @@ export class ResultComponent implements OnInit {
             key = subdetails[i].subject;
 
             let marksobj = {
+              sem:semester,
               semId: semId,
+              sub:key,
               subId: subid,
+              student: stud,
               studentId: StdId,
               ia: uploadedData[idx][String(key) + '_IA'],
               ea: uploadedData[idx][String(key) + '_EA'],
@@ -202,6 +205,7 @@ export class ResultComponent implements OnInit {
 
     console.log(data.form.value); //ex:{  sem : 2 }
     let semObj = data.form.value;
+    this.selectedSem = semObj.sem;
     let isSemavailable = true;
 
     this.ResultsService.getSem().subscribe({
@@ -218,7 +222,7 @@ export class ResultComponent implements OnInit {
         if (isSemavailable) {
           this.ResultsService.postSem(semObj).subscribe((arg) => {
             this.SemObjId = arg._id;
-            console.log('Added Sem to db ..' + arg._id);
+            console.log('Added Sem to db ...'+arg._id);
           });
           this.uploadFile = true;
         }
