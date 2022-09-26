@@ -100,7 +100,9 @@ export class ResultComponent implements OnInit {
   }
 
   AddStudent(semId: any, uploadedData: any) {
+    let id = 0;
     uploadedData.forEach(async (_data: any, j: any) => {
+      id = j;
       let percent = Number(uploadedData[j]['Percentage']);
       // console.log(percent);
       let stdobj = {
@@ -119,6 +121,10 @@ export class ResultComponent implements OnInit {
         j
       );
     });
+    // if(id >= uploadedData.length-1) {
+    //   this.viewresult = false;
+    console.log('************************************');
+    // }
   }
 
   async AddMarks(
@@ -137,21 +143,21 @@ export class ResultComponent implements OnInit {
           if (!this.submitload) this.submitload = true;
           key = subdetails[i].subject;
           // console.log(semId+" "+StdId+" "+subid+" "+uploadedData[j][key]+" "+key +" "+ idx);
-          console.log(
-            StdId +
-              ' ' +
-              subid +
-              ' ' +
-              key +
-              ' ' +
-              uploadedData[idx][String(key) + '_IA'] +
-              ' ' +
-              uploadedData[idx][String(key) + '_EA'] +
-              ' ' +
-              uploadedData[idx][key] +
-              ' ' +
-              idx
-          );
+          // console.log(
+          //   StdId +
+          //     ' ' +
+          //     subid +
+          //     ' ' +
+          //     key +
+          //     ' ' +
+          //     uploadedData[idx][String(key) + '_IA'] +
+          //     ' ' +
+          //     uploadedData[idx][String(key) + '_EA'] +
+          //     ' ' +
+          //     uploadedData[idx][key] +
+          //     ' ' +
+          //     idx
+          // );
           let marksobj = {
             semId: semId,
             subId: subid,
@@ -168,7 +174,7 @@ export class ResultComponent implements OnInit {
       }
     });
     console.log('...............');
-    this.subjectData = false;
+  
   }
   //Add sem
   uploadFile = false; //this is flag to show the upload button
