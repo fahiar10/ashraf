@@ -20,7 +20,7 @@ table{
     position: relative;
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0 1.5em;
+    border-spacing: 0 0em;
     border-radius: 10px;
     border: solid lightcoral 1px;
 }
