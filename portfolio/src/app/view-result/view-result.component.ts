@@ -16,8 +16,9 @@ export class ViewResultComponent implements OnInit {
   SubjectTopperObj:any;
   SubjectFailObj:any;
   async ngOnInit(){
-    this.TopperObj = await lastValueFrom(this.ResultsService.getTopper());
-    this.SubjectTopperObj = await lastValueFrom(this.ResultsService.getSubTopper());
+    let semId = localStorage.getItem("semId");
+    this.TopperObj = await lastValueFrom(this.ResultsService.getTopper(semId));
+    this.SubjectTopperObj = await lastValueFrom(this.ResultsService.getSubTopper(semId));
     this.SubjectFailObj = await lastValueFrom(this.ResultsService.getSubFail());
 
   }
